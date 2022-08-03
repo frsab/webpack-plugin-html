@@ -6,6 +6,7 @@
 //     }
 // }
 
-module.exports = function (value) {
-    console.log(value);
+module.exports = function (name) {
+    let message = `Bonjour ${name}`
+    console.log(message);
 }
