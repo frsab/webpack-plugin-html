@@ -1,5 +1,7 @@
 const  path = require('path')
+const  dev = process.env.NODE_ENV==='dev';
 const TerserPlugin = require("terser-webpack-plugin");
+
 
 
 
@@ -30,9 +32,8 @@ minify.getMinimizerVersion = () => {
     // eslint-disable-next-line global-require, import/no-extraneous-dependencies
     packageJson = require("uglify-module/package.json");
   } catch (error) {
-    // Ignore
+    console.error(error);
   }
-
   return packageJson && packageJson.version;
 };
 
@@ -49,47 +50,16 @@ module.exports = {
     filename: 'my-first-webpack.bundle.js',   
   },
   watch:true,
-  // module:{
-  //   rules: [
-  //     {
-  //       test: /\.m?js$/,
-  //       exclude: /node_modules/,
-  //       use: ['babel-loader']
-  //       // use: {
-  //       //   loader: 'babel-loader',
-  //       //   options: {
-  //       //     presets:['env']
-  //       //     // presets: [
-  //       //     //   ['@babel/preset-env', { targets: "defaults" }]
-  //       //     // ],
-  //       //     // plugins: ['@babel/plugin-proposal-class-properties']
-  //       //   }
-  //       // }
-  //     }
-  //   ]
-  // }     
+   
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader']
-        // use: {
-        //   loader: 'babel-loader',
-        //   options: {
-        //     presets: [
-        //       ['@babel/preset-env'
-        //     //  , { targets: "defaults" }
-        //     ]
-        //     ]
-        //   }
-        // }
       }
     ]
   },
-  // plugins:[
-  //  new TerserPlugin()
-  // ]
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin({
